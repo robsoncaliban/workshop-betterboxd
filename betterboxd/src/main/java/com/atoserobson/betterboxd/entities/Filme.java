@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,13 +36,14 @@ public class Filme implements Serializable {
         @Column(nullable = false)
         private String urlTrailer;
 
+        @ManyToOne
+        @JoinColumn(name = "categoria_id", nullable = false)
         private Categoria categoria;
 
-        public Filme(String nome, String descricao, String urlTrailer, Categoria categoria) {
+        public Filme(String nome, String descricao, String urlTrailer) {
                 this.nome = nome;
                 this.descricao = descricao;
                 this.urlTrailer = urlTrailer;
-                this.categoria = categoria;
         }
 
 }
