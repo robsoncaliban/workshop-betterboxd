@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeRequest;
@@ -34,6 +35,12 @@ public class FilmeController {
         public ResponseEntity<List<FilmeResponse>> buscarTodos() {
                 var filmes = filmeService.buscarTodos();
                 return ResponseEntity.ok(filmes);
+        }
+
+        @GetMapping(params = "nome")
+        public ResponseEntity<List<FilmeResponse>> buscarPorNome(@RequestParam String nome) {
+                var filme = filmeService.buscarPorNome(nome);
+                return ResponseEntity.ok(filme);
         }
 
 }

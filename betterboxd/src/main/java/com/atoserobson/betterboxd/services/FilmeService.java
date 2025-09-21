@@ -57,4 +57,20 @@ public class FilmeService {
                 return response;
         }
 
+        @Transactional(readOnly = true)
+        public List<FilmeResponse> buscarPorNome(String nome) {
+                var filmes = filmeRepository.findAllByNomeContainingIgnoreCase(nome);
+
+                var response = filmes.stream().map(filme -> {
+                        var categoriaResponse = new CategoriaResponse(
+                                        filme.getCategoria().getId(),
+                                        filme.getCategoria().getNome());
+                        return new FilmeResponse(filme.getId(),
+                                        filme.getNome(), filme.getUrlTrailer(), categoriaResponse);
+
+                }).toList();
+
+                return response;
+        }
+
 }
