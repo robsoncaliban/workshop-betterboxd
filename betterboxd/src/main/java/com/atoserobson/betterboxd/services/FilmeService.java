@@ -1,5 +1,7 @@
 package com.atoserobson.betterboxd.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,22 @@ public class FilmeService {
                 var filmeResponse = new FilmeResponse(id, nome, urlTrailer, categoriaResponse);
 
                 return filmeResponse;
+        }
+
+        @Transactional(readOnly = true)
+        public List<FilmeResponse> buscarTodos() {
+                var filmes = filmeRepository.findAll();
+
+                var response = filmes.stream().map(filme -> {
+                        var categoriaResponse = new CategoriaResponse(
+                                        filme.getCategoria().getId(),
+                                        filme.getCategoria().getNome());
+                        return new FilmeResponse(filme.getId(),
+                                        filme.getNome(), filme.getUrlTrailer(), categoriaResponse);
+
+                }).toList();
+
+                return response;
         }
 
 }
