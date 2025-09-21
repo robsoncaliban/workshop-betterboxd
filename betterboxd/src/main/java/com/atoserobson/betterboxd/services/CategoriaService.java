@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaRequest;
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaResponse;
+import com.atoserobson.betterboxd.controllers.dto.filme.FilmeResponse;
 import com.atoserobson.betterboxd.controllers.exception.EntityNotFoundException;
 import com.atoserobson.betterboxd.entities.Categoria;
 import com.atoserobson.betterboxd.repositories.CategoriaRepository;
@@ -41,6 +42,21 @@ public class CategoriaService {
                 var response = categorias.stream()
                                 .map(categoria -> new CategoriaResponse(categoria.getId(), categoria.getNome()))
                                 .toList();
+
+                return response;
+        }
+
+        public List<FilmeResponse> buscarFilmesDeCategoria(Long id) {
+                var categoria = getEntityById(id);
+
+                var response = categoria.getFilmes().stream().map(filme -> {
+                        var categoriaResponse = new CategoriaResponse(
+                                        filme.getCategoria().getId(),
+                                        filme.getCategoria().getNome());
+                        return new FilmeResponse(filme.getId(),
+                                        filme.getNome(), filme.getUrlTrailer(), categoriaResponse);
+
+                }).toList();
 
                 return response;
         }

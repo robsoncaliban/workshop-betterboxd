@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaRequest;
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaResponse;
+import com.atoserobson.betterboxd.controllers.dto.filme.FilmeResponse;
 import com.atoserobson.betterboxd.services.CategoriaService;
 
 import jakarta.validation.Valid;
@@ -33,6 +35,12 @@ public class CategoriaController {
         @GetMapping
         public ResponseEntity<List<CategoriaResponse>> buscarTodos() {
                 var categorias = categoriaService.buscarTodos();
+                return ResponseEntity.ok(categorias);
+        }
+
+        @GetMapping("/{id}/filmes")
+        public ResponseEntity<List<FilmeResponse>> buscarFilmesDeCategoria(@PathVariable Long id) {
+                var categorias = categoriaService.buscarFilmesDeCategoria(id);
                 return ResponseEntity.ok(categorias);
         }
 
