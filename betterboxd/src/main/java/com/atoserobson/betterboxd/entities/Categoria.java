@@ -30,4 +30,9 @@ public class Categoria implements Serializable {
         private String nome;
 
         private List<Filme> filmes;
+
+        public Categoria(String nome) {
+                this.nome = nome;
+        }
+
 }

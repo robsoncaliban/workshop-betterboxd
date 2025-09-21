@@ -30,7 +30,7 @@ public class FilmeService {
                 filme = filmeRepository.save(filme);
 
                 // transforma as entidades em responses
-                var categoriaResponse = new CategoriaResponse(categoria.getNome());
+                var categoriaResponse = new CategoriaResponse(categoria.getId(), categoria.getNome());
                 var id = filme.getId();
                 var nome = filme.getNome();
                 var urlTrailer = filme.getUrlTrailer();
