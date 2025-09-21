@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaMapper;
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaRequest;
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaResponse;
+import com.atoserobson.betterboxd.controllers.dto.filme.FilmeMapper;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeResponse;
 import com.atoserobson.betterboxd.controllers.exception.EntityNotFoundException;
 import com.atoserobson.betterboxd.entities.Categoria;
@@ -23,17 +25,15 @@ public class CategoriaService {
         @Transactional
         public CategoriaResponse criar(CategoriaRequest request) {
                 // transforma o request em entidade
-                var categoria = new Categoria(request.nome());
+                var categoria = CategoriaMapper.converterEmEntidade(request);
 
                 // salva entidade
                 categoria = categoriaRepository.save(categoria);
 
                 // transforma a entidade em response
-                var id = categoria.getId();
-                var nome = categoria.getNome();
-                var categoriaResponse = new CategoriaResponse(id, nome);
+                var response = CategoriaMapper.converterEmDto(categoria);
 
-                return categoriaResponse;
+                return response;
         }
 
         @Transactional(readOnly = true)
@@ -41,7 +41,7 @@ public class CategoriaService {
                 var categorias = categoriaRepository.findAll();
 
                 var response = categorias.stream()
-                                .map(categoria -> new CategoriaResponse(categoria.getId(), categoria.getNome()))
+                                .map(categoria -> CategoriaMapper.converterEmDto(categoria))
                                 .toList();
 
                 return response;
@@ -51,14 +51,7 @@ public class CategoriaService {
         public List<FilmeResponse> buscarFilmesDeCategoria(Long id) {
                 var categoria = buscarEntidadePorId(id);
 
-                var response = categoria.getFilmes().stream().map(filme -> {
-                        var categoriaResponse = new CategoriaResponse(
-                                        filme.getCategoria().getId(),
-                                        filme.getCategoria().getNome());
-                        return new FilmeResponse(filme.getId(),
-                                        filme.getNome(), filme.getUrlTrailer(), categoriaResponse);
-
-                }).toList();
+                var response = categoria.getFilmes().stream().map(filme -> FilmeMapper.converterEmDto(filme)).toList();
 
                 return response;
         }
