@@ -36,6 +36,7 @@ public class CategoriaService {
                 return categoriaResponse;
         }
 
+        @Transactional(readOnly = true)
         public List<CategoriaResponse> buscarTodos() {
                 var categorias = categoriaRepository.findAll();
 
@@ -46,6 +47,7 @@ public class CategoriaService {
                 return response;
         }
 
+        @Transactional(readOnly = true)
         public List<FilmeResponse> buscarFilmesDeCategoria(Long id) {
                 var categoria = buscarEntidadePorId(id);
 
