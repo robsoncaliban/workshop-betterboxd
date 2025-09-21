@@ -25,7 +25,7 @@ public class FilmeController {
         private final FilmeService filmeService;
 
         @PostMapping
-        public ResponseEntity<FilmeResponse> create(@RequestBody @Valid FilmeRequest request) {
+        public ResponseEntity<FilmeResponse> criar(@RequestBody @Valid FilmeRequest request) {
                 var filme = filmeService.criar(request);
                 return ResponseEntity.status(HttpStatus.CREATED).body(filme);
         }
