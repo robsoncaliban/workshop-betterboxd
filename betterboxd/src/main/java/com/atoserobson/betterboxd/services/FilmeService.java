@@ -21,7 +21,7 @@ public class FilmeService {
         @Transactional
         public FilmeResponse create(FilmeRequest request) {
                 // busca categoria por ID
-                var categoria = categoriaService.getEntityById(request.categoriaId());
+                var categoria = categoriaService.buscarEntidadePorId(request.categoriaId());
 
                 // transforma o request em entidade
                 var filme = new Filme(request.nome(), request.descricao(), request.urlTrailer(), categoria);

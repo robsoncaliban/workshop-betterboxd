@@ -47,7 +47,7 @@ public class CategoriaService {
         }
 
         public List<FilmeResponse> buscarFilmesDeCategoria(Long id) {
-                var categoria = getEntityById(id);
+                var categoria = buscarEntidadePorId(id);
 
                 var response = categoria.getFilmes().stream().map(filme -> {
                         var categoriaResponse = new CategoriaResponse(
@@ -61,7 +61,7 @@ public class CategoriaService {
                 return response;
         }
 
-        protected Categoria getEntityById(Long id) {
+        protected Categoria buscarEntidadePorId(Long id) {
                 return categoriaRepository.findById(id)
                                 .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada"));
         }
