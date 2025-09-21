@@ -20,7 +20,7 @@ public class CategoriaService {
         private final CategoriaRepository categoriaRepository;
 
         @Transactional
-        public CategoriaResponse create(CategoriaRequest request) {
+        public CategoriaResponse criar(CategoriaRequest request) {
                 // transforma o request em entidade
                 var categoria = new Categoria(request.nome());
 

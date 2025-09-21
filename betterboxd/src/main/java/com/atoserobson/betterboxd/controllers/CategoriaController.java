@@ -25,8 +25,8 @@ public class CategoriaController {
         private final CategoriaService categoriaService;
 
         @PostMapping
-        public ResponseEntity<CategoriaResponse> create(@RequestBody @Valid CategoriaRequest request) {
-                var categoria = categoriaService.create(request);
+        public ResponseEntity<CategoriaResponse> criar(@RequestBody @Valid CategoriaRequest request) {
+                var categoria = categoriaService.criar(request);
                 return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
         }
 
