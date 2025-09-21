@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class UsuarioService {
@@ -22,6 +24,11 @@ public class UsuarioService {
             throw new RuntimeException("Email: este email já está em uso");
         }
         return new UsuarioResponse(usuario);
+    }
+
+    public List<UsuarioResponse> listarUsuarios(){
+        return usuarioRepository.findAll()
+                    .stream().map(UsuarioResponse::new).toList();
     }
 
 }
