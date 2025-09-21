@@ -19,7 +19,7 @@ public class FilmeService {
         private final CategoriaService categoriaService;
 
         @Transactional
-        public FilmeResponse create(FilmeRequest request) {
+        public FilmeResponse criar(FilmeRequest request) {
                 // busca categoria por ID
                 var categoria = categoriaService.buscarEntidadePorId(request.categoriaId());
 
