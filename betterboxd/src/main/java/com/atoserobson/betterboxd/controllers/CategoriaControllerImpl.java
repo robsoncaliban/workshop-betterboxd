@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atoserobson.betterboxd.controllers.docs.CategoriaController;
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaRequest;
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaResponse;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeResponse;
@@ -22,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/categorias")
-public class CategoriaController {
+public class CategoriaControllerImpl implements CategoriaController {
 
         private final CategoriaService categoriaService;
 
