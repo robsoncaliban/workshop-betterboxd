@@ -2,6 +2,7 @@ package com.atoserobson.betterboxd.services;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,7 +11,8 @@ import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaRequest;
 import com.atoserobson.betterboxd.controllers.dto.categoria.CategoriaResponse;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeMapper;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeResponse;
-import com.atoserobson.betterboxd.controllers.exception.EntityNotFoundException;
+import com.atoserobson.betterboxd.controllers.exception.EntidadeNaoEncontradaException;
+import com.atoserobson.betterboxd.controllers.exception.ViolacaoIntegridadeDadosException;
 import com.atoserobson.betterboxd.entities.Categoria;
 import com.atoserobson.betterboxd.repositories.CategoriaRepository;
 
@@ -24,16 +26,22 @@ public class CategoriaService {
 
         @Transactional
         public CategoriaResponse criar(CategoriaRequest request) {
-                // transforma o request em entidade
-                var categoria = CategoriaMapper.converterEmEntidade(request);
+                try {
 
-                // salva entidade
-                categoria = categoriaRepository.save(categoria);
+                        // transforma o request em entidade
+                        var categoria = CategoriaMapper.converterEmEntidade(request);
 
-                // transforma a entidade em response
-                var response = CategoriaMapper.converterEmDto(categoria);
+                        // salva entidade
+                        categoria = categoriaRepository.save(categoria);
 
-                return response;
+                        // transforma a entidade em response
+                        var response = CategoriaMapper.converterEmDto(categoria);
+
+                        return response;
+                } catch (DataIntegrityViolationException e) {
+                        throw new ViolacaoIntegridadeDadosException(
+                                        String.format("Erro ao tentar criar '%s'", request.nome()));
+                }
         }
 
         @Transactional(readOnly = true)
@@ -58,7 +66,7 @@ public class CategoriaService {
 
         protected Categoria buscarEntidadePorId(Long id) {
                 return categoriaRepository.findById(id)
-                                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada"));
+                                .orElseThrow(() -> new EntidadeNaoEncontradaException("Categoria não encontrada"));
         }
 
 }
