@@ -39,7 +39,7 @@ public class FilmeControllerImpl implements FilmeController {
         }
 
         @GetMapping(params = "nome")
-        public ResponseEntity<List<FilmeResponse>> buscarPorNome(@RequestParam String nome) {
+        public ResponseEntity<List<FilmeResponse>> buscarPorNome(@RequestParam(required = false) String nome) {
                 var filme = filmeService.buscarPorNome(nome);
                 return ResponseEntity.ok(filme);
         }
