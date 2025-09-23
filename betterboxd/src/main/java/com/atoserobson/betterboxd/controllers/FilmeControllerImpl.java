@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atoserobson.betterboxd.controllers.docs.FilmeController;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeRequest;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeResponse;
 import com.atoserobson.betterboxd.services.FilmeService;
@@ -21,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/filmes")
-public class FilmeController {
+public class FilmeControllerImpl implements FilmeController {
 
         private final FilmeService filmeService;
 
@@ -38,7 +39,7 @@ public class FilmeController {
         }
 
         @GetMapping(params = "nome")
-        public ResponseEntity<List<FilmeResponse>> buscarPorNome(@RequestParam String nome) {
+        public ResponseEntity<List<FilmeResponse>> buscarPorNome(@RequestParam(required = false) String nome) {
                 var filme = filmeService.buscarPorNome(nome);
                 return ResponseEntity.ok(filme);
         }

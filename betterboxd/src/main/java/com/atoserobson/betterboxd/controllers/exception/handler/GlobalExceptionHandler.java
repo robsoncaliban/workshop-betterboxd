@@ -9,7 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.atoserobson.betterboxd.controllers.exception.EntidadeNaoEncontradaException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -31,8 +32,9 @@ public class GlobalExceptionHandler {
                                 .body(messageException);
         }
 
-        @ExceptionHandler(EntityNotFoundException.class)
-        public ResponseEntity<ExceptionResponse> entityNotFoundException(EntityNotFoundException exception,
+        @ExceptionHandler(EntidadeNaoEncontradaException.class)
+        public ResponseEntity<ExceptionResponse> entidadeNaoEncontradaException(
+                        EntidadeNaoEncontradaException exception,
                         HttpServletRequest request) {
                 var status = HttpStatus.NOT_FOUND;
                 var messageException = new ExceptionResponse(request, status, exception.getMessage());

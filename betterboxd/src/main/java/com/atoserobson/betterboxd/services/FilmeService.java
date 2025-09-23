@@ -3,12 +3,14 @@ package com.atoserobson.betterboxd.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeMapper;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeRequest;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeResponse;
+import com.atoserobson.betterboxd.controllers.exception.ViolacaoIntegridadeDadosException;
 import com.atoserobson.betterboxd.entities.Filme;
 import com.atoserobson.betterboxd.repositories.FilmeRepository;
 
@@ -23,20 +25,26 @@ public class FilmeService {
 
         @Transactional
         public FilmeResponse criar(FilmeRequest request) {
-                // transforma o request em entidade
-                var filme = FilmeMapper.converterEmEntidade(request);
+                try {
 
-                // busca categoria por ID
-                var categoria = categoriaService.buscarEntidadePorId(request.categoriaId());
-                filme.setCategoria(categoria);
+                        // transforma o request em entidade
+                        var filme = FilmeMapper.converterEmEntidade(request);
 
-                // salva entidade
-                filme = filmeRepository.save(filme);
+                        // busca categoria por ID
+                        var categoria = categoriaService.buscarEntidadePorId(request.categoriaId());
+                        filme.setCategoria(categoria);
 
-                // transforma as entidades em responses
-                var filmeResponse = FilmeMapper.converterEmDto(filme);
+                        // salva entidade
+                        filme = filmeRepository.save(filme);
 
-                return filmeResponse;
+                        // transforma as entidades em responses
+                        var filmeResponse = FilmeMapper.converterEmDto(filme);
+
+                        return filmeResponse;
+                } catch (DataIntegrityViolationException e) {
+                        throw new ViolacaoIntegridadeDadosException(
+                                        String.format("Erro ao tentar criar '%s'", request.nome()));
+                }
         }
 
         @Transactional(readOnly = true)
