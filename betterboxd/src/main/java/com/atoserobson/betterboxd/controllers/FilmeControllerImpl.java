@@ -2,14 +2,11 @@ package com.atoserobson.betterboxd.controllers;
 
 import java.util.List;
 
+import com.atoserobson.betterboxd.controllers.dto.avaliacao.AvaliacaoFilmeResponse;
+import com.atoserobson.betterboxd.controllers.dto.avaliacao.AvaliacaoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.atoserobson.betterboxd.controllers.docs.FilmeController;
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeRequest;
@@ -44,4 +41,9 @@ public class FilmeControllerImpl implements FilmeController {
                 return ResponseEntity.ok(filme);
         }
 
+        @GetMapping(value = "{id}/avaliacoes")
+        public ResponseEntity<List<AvaliacaoFilmeResponse>> buscarAvaliacoesDeUmFilme(@PathVariable Long id) {
+                List<AvaliacaoFilmeResponse> response = filmeService.listarAvaliacoesDeUmFilme(id);
+                return ResponseEntity.ok(response);
+        }
 }
