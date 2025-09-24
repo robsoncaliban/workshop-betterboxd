@@ -26,7 +26,7 @@ public interface CategoriaController {
         @ApiResponses({
                         @ApiResponse(responseCode = "201", description = "Categoria criada com sucesso", content = @Content(mediaType = "application/json;charset=UTF-8", schema = @Schema(implementation = CategoriaResponse.class))),
                         @ApiResponse(responseCode = "409", description = "Conflito na criação", content = @Content(mediaType = "application/json;charset=UTF-8", schema = @Schema(implementation = ExceptionResponse.class))),
-                        @ApiResponse(responseCode = "422", description = "Request inválido", content = @Content(mediaType = "application/json;charset=UTF-8", schema = @Schema(implementation = ExceptionResponse.class))),
+                        @ApiResponse(responseCode = "400", description = "Request inválido", content = @Content(mediaType = "application/json;charset=UTF-8", schema = @Schema(implementation = ExceptionResponse.class))),
         })
         ResponseEntity<CategoriaResponse> criar(
                         @RequestBody(description = "Request para criar uma categoria", required = true) CategoriaRequest request);
