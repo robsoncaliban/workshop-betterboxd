@@ -85,7 +85,7 @@ java -jar target/workshop-betterboxd-0.0.1-SNAPSHOT.jar
 
 ### Avaliações
 
-// TODO: Listar endpoints
+- Avaliar filme — `POST /avaliacoes`
 
 ### Categorias
 
