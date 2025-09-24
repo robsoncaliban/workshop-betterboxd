@@ -81,7 +81,9 @@ java -jar target/workshop-betterboxd-0.0.1-SNAPSHOT.jar
 
 ### Usuários
 
-// TODO: Listar endpoints
+- Criar usuário — `POST /usuarios`
+- Buscar todas os usuários — `GET /usuarios`
+- Buscar avaliações de um usuário — `GET /usuarios/{id}/avaliacoes`
 
 ### Avaliações
 
