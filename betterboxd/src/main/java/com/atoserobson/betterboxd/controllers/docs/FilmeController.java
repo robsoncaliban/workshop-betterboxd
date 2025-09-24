@@ -2,8 +2,6 @@ package com.atoserobson.betterboxd.controllers.docs;
 
 import java.util.List;
 
-import com.atoserobson.betterboxd.controllers.dto.avaliacao.AvaliacaoFilmeResponse;
-import com.atoserobson.betterboxd.controllers.dto.usuario.UsuarioResponse;
 import org.springframework.http.ResponseEntity;
 
 import com.atoserobson.betterboxd.controllers.dto.filme.FilmeRequest;
@@ -19,8 +17,6 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Tag(name = "Filmes", description = "Operações relacionadas a filme")
 public interface FilmeController {
@@ -43,20 +39,11 @@ public interface FilmeController {
         ResponseEntity<List<FilmeResponse>> buscarPorNome(
                         @Parameter(description = "Nome para filtrar", required = false, example = "como") String nome);
 
-        @Operation(summary = "Listar avaliações de um filme", description = "Retorna uma lista com todas as avaliações de um filme")
+        @Operation(summary = "Excluir", description = "Exclui o filme por ID")
         @ApiResponses({
-                @ApiResponse(
-                        responseCode = "200",
-                        description = "Listagem feita com sucesso",
-                        content = @Content(mediaType = "application/json;charset=UTF-8",
-                        array = @ArraySchema(schema = @Schema(implementation = AvaliacaoFilmeResponse.class)))),
-                @ApiResponse(
-                        responseCode = "404",
-                        description = "Filme não encontrado",
-                        content = @Content(mediaType = "application/json;charset=UTF-8",
-                        schema = @Schema(implementation = ExceptionResponse.class)))
+                        @ApiResponse(responseCode = "204", description = "Filme exluído"),
+                        @ApiResponse(responseCode = "404", description = "Filme não encontrado", content = @Content(mediaType = "application/json;charset=UTF-8", schema = @Schema(implementation = ExceptionResponse.class))),
         })
-        ResponseEntity<List<AvaliacaoFilmeResponse>> buscarAvaliacoesDeUmFilme(
-                @Parameter(description = "ID do filme", example = "1")
-                Long id);
+        ResponseEntity<Void> excluir(Long id);
+
 }

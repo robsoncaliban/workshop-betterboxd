@@ -98,6 +98,7 @@ java -jar target/workshop-betterboxd-0.0.1-SNAPSHOT.jar
 - Criar filme — `POST /filmes`
 - Buscar todos os filmes — `GET /filmes`
 - Buscar filmes filtrado por nome — `GET /filmes?nome='algumfilme'`
+- Excluir filme — `DELETE /filmes/{id}`
 
 ---
 
