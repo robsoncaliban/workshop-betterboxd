@@ -92,6 +92,7 @@ java -jar target/workshop-betterboxd-0.0.1-SNAPSHOT.jar
 - Criar categoria — `POST /categorias`
 - Buscar todas as categorias — `GET /categorias`
 - Buscar filmes por categoria — `GET /categorias/{id}/filmes`
+- Atualizar categoria — `PUT /categorias/{id}`
 
 ### Filmes
 

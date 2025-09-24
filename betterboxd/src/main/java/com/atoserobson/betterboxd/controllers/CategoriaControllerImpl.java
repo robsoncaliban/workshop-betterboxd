@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,12 @@ public class CategoriaControllerImpl implements CategoriaController {
         public ResponseEntity<List<FilmeResponse>> buscarFilmesDeCategoria(@PathVariable Long id) {
                 var categorias = categoriaService.buscarFilmesDeCategoria(id);
                 return ResponseEntity.ok(categorias);
+        }
+
+        @PutMapping("/{id}")
+        public ResponseEntity<CategoriaResponse> atualizar(Long id, CategoriaRequest request) {
+                var categoria = categoriaService.atualizar(id, request);
+                return ResponseEntity.ok(categoria);
         }
 
 }

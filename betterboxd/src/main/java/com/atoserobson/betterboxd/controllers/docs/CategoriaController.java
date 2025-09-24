@@ -45,4 +45,14 @@ public interface CategoriaController {
         ResponseEntity<List<FilmeResponse>> buscarFilmesDeCategoria(
                         @Parameter(description = "ID da categoria", required = true, example = "1") Long id);
 
+        @Operation(summary = "Atualizar categoria", description = "Atualiza categoria")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "200", description = "Sucesso na atualização de categoria", content = @Content(mediaType = "application/json;charset=UTF-8", array = @ArraySchema(schema = @Schema(implementation = CategoriaResponse.class)))),
+                        @ApiResponse(responseCode = "404", description = "Categoria não encontrada", content = @Content(mediaType = "application/json;charset=UTF-8", schema = @Schema(implementation = ExceptionResponse.class))),
+                        @ApiResponse(responseCode = "400", description = "Request inválido", content = @Content(mediaType = "application/json;charset=UTF-8", schema = @Schema(implementation = ExceptionResponse.class)))
+        })
+        ResponseEntity<CategoriaResponse> atualizar(
+                        @Parameter(description = "ID da categoria", required = true, example = "1") Long id,
+                        @RequestBody(description = "Request para criar uma categoria", required = true) CategoriaRequest request);
+
 }

@@ -64,6 +64,25 @@ public class CategoriaService {
                 return response;
         }
 
+        @Transactional
+        public CategoriaResponse atualizar(Long id, CategoriaRequest request) {
+                try {
+                        // transforma o request em entidade
+                        var categoria = CategoriaMapper.converterEmEntidade(request);
+
+                        // salva entidade
+                        categoria = categoriaRepository.save(categoria);
+
+                        // transforma a entidade em response
+                        var response = CategoriaMapper.converterEmDto(categoria);
+
+                        return response;
+                } catch (DataIntegrityViolationException e) {
+                        throw new ViolacaoIntegridadeDadosException(
+                                        String.format("Erro ao tentar atualizar '%s'", request.nome()));
+                }
+        }
+
         protected Categoria buscarEntidadePorId(Long id) {
                 return categoriaRepository.findById(id)
                                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Categoria não encontrada"));
