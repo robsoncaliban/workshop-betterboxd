@@ -1,5 +1,7 @@
 package com.atoserobson.betterboxd.controllers.exception.handler;
 
+import com.atoserobson.betterboxd.controllers.exception.DuplicidadeDadosException;
+import com.atoserobson.betterboxd.controllers.exception.ViolacaoIntegridadeDadosException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,9 +20,9 @@ import lombok.RequiredArgsConstructor;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-        @ExceptionHandler(DataIntegrityViolationException.class)
-        public ResponseEntity<ExceptionResponse> dataIntegrityViolationException(
-                        DataIntegrityViolationException exception,
+        @ExceptionHandler(ViolacaoIntegridadeDadosException.class)
+        public ResponseEntity<ExceptionResponse> violacaoIntegridadeDadosException(
+                        ViolacaoIntegridadeDadosException exception,
                         HttpServletRequest request) {
                 var status = HttpStatus.CONFLICT;
                 var messageException = new ExceptionResponse(request, status, exception.getMessage());
@@ -50,8 +52,8 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ExceptionResponse> methodArgumentNotValidException(
                         MethodArgumentNotValidException exception,
                         HttpServletRequest request, BindingResult result) {
-                var status = HttpStatus.UNPROCESSABLE_ENTITY;
-                var messageException = new ExceptionResponse(request, status, "Invalid input(s)", result);
+                var status = HttpStatus.BAD_REQUEST;
+                var messageException = new ExceptionResponse(request, status, "Campos inválidos", result);
                 var contentType = MediaType.APPLICATION_JSON;
 
                 return ResponseEntity
