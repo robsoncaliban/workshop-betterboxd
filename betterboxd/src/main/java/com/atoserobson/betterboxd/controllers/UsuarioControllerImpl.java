@@ -1,5 +1,7 @@
 package com.atoserobson.betterboxd.controllers;
 
+import com.atoserobson.betterboxd.controllers.docs.UsuarioController;
+import com.atoserobson.betterboxd.controllers.dto.avaliacao.AvaliacaoResponse;
 import com.atoserobson.betterboxd.controllers.dto.usuario.UsuarioRequest;
 import com.atoserobson.betterboxd.controllers.dto.usuario.UsuarioResponse;
 import com.atoserobson.betterboxd.services.UsuarioService;
@@ -14,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/usuarios")
 @AllArgsConstructor
-public class UsuarioController {
+public class UsuarioControllerImpl implements UsuarioController {
 
     private UsuarioService usuarioService;
 
@@ -27,6 +29,12 @@ public class UsuarioController {
     @GetMapping
     public ResponseEntity<List<UsuarioResponse>> listarUsuarios() {
         List<UsuarioResponse> response = usuarioService.listarUsuarios();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/{id}/avaliacoes")
+    public ResponseEntity<List<AvaliacaoResponse>> listarAvaliacoesDeUmUsuario(@PathVariable Long id) {
+        List<AvaliacaoResponse> response = usuarioService.listarAvaliacoesDeUmUsuario(id);
         return ResponseEntity.ok(response);
     }
 }

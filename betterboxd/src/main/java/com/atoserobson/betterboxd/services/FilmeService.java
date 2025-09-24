@@ -3,7 +3,11 @@ package com.atoserobson.betterboxd.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.atoserobson.betterboxd.controllers.exception.EntidadeNaoEncontradaException;
 import org.springframework.dao.DataIntegrityViolationException;
+import com.atoserobson.betterboxd.controllers.dto.avaliacao.AvaliacaoFilmeResponse;
+import com.atoserobson.betterboxd.controllers.dto.avaliacao.AvaliacaoMapper;
+import com.atoserobson.betterboxd.entities.Avaliacao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,6 +71,25 @@ public class FilmeService {
                 }
 
                 return response;
+        }
+
+        public Filme buscarFilmePorId(Long id) {
+            return filmeRepository.findById(id).orElseThrow(
+                    () -> new EntidadeNaoEncontradaException("Filme não encontrado")
+            );
+        }
+
+        public List<AvaliacaoFilmeResponse> listarAvaliacoesDeUmFilme(Long idFilme) {
+            Filme filme = buscarFilmePorId(idFilme);
+
+            List<Avaliacao> avaliacoes = filme.getAvaliacoes();
+            List<AvaliacaoFilmeResponse> response = new ArrayList<>();
+
+            for(Avaliacao avaliacao : avaliacoes){
+                AvaliacaoFilmeResponse avaliacaoResponse = AvaliacaoMapper.converterEmDtoComUsuario(avaliacao);
+                response.add(avaliacaoResponse);
+            }
+            return response;
         }
 
 }
