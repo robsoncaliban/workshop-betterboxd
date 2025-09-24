@@ -1,8 +1,5 @@
 package com.atoserobson.betterboxd.controllers.exception.handler;
 
-import com.atoserobson.betterboxd.controllers.exception.DuplicidadeDadosException;
-import com.atoserobson.betterboxd.controllers.exception.ViolacaoIntegridadeDadosException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.atoserobson.betterboxd.controllers.exception.EntidadeNaoEncontradaException;
+import com.atoserobson.betterboxd.controllers.exception.ViolacaoIntegridadeDadosException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
